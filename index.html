@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bustigalletas – Galletas Artesanales en Mérida, Yucatán</title>
+  <meta name="description" content="Galletas artesanales hechas a mano en Mérida, Yucatán. Brownie relleno, Red Velvet, Chispas con Nutella y más. Entregas martes y jueves." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===================================================
+       RESET & TOKENS
+    =================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:    #C56E23;
+      --choc:      #2B1204;
+      --cream:     #FDF6EE;
+      --beige:     #B9B1AA;
+      --white:     #ffffff;
+      --ff-display: 'Playfair Display', Georgia, serif;
+      --ff-body:    'Nunito', sans-serif;
+      --nav-h:      68px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--cream);
+      color: var(--choc);
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===================================================
+       UTILITY — REVEAL ANIMATION
+    =================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ===================================================
+       SECTION TITLE DECORATION
+    =================================================== */
+    .section-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .section-label::before {
+      content: '|';
+      color: var(--orange);
+      font-weight: 300;
+      font-size: 16px;
+    }
+
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      color: var(--choc);
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    /* Editorial underline bar below h2 */
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-title-wrap .title-bar {
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--orange);
+      border-radius: 2px;
+      margin: 12px auto 0;
+    }
+
+    /* ===================================================
+       NAVBAR
+    =================================================== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      transition: background 0.35s, box-shadow 0.35s;
+    }
+    .navbar.scrolled {
+      background: rgba(253,246,238,0.97);
+      box-shadow: 0 2px 20px rgba(43,18,4,0.10);
+    }
+
+    .nav-logo img {
+      height: 44px;
+      object-fit: contain;
+    }
+    .nav-logo span {
+      font-family: var(--ff-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--choc);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--choc);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    .nav-cta {
+      background: var(--orange);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-weight: 700;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: #a85a18 !important; color: var(--white) !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .hamburger span {
+      width: 24px; height: 2px;
+      background: var(--choc);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: var(--cream);
+      padding: 20px 32px 32px;
+      z-index: 899;
+      border-top: 1px solid rgba(43,18,4,0.1);
+      box-shadow: 0 8px 20px rgba(43,18,4,0.08);
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .mobile-nav a { font-size: 17px; font-weight: 600; color: var(--choc); }
+    .mobile-nav a:hover { color: var(--orange); }
+
+    /* ===================================================
+       HERO
+    =================================================== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: var(--nav-h) 24px 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('Hero.jpg');
+      background-size: cover;
+      background-position: center;
+      background-color: var(--choc);
+    }
+
+    /* Dark overlay */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(43,18,4,0.72) 0%, rgba(43,18,4,0.55) 100%);
+    }
+
+    /* CHANGE 4a: Artisanal grain texture overlay */
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 7px 16px;
+      border-radius: 30px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+    .hero-tag::before { content: '|'; color: var(--orange); }
+
+    .hero h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(38px, 8vw, 80px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: rgba(255,255,255,0.80);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s forwards;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 15px 32px;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #a85a18; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 40px;
+      border: 2px solid rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===================================================
+       TRUST BAR — CHANGE 1 & 4e
+    =================================================== */
+    .trust-bar {
+      /* CHANGE 1: background changed from #9CD8E9 to #2B1204 */
+      background: #2B1204;
+      padding: 48px 24px;
+    }
+
+    .trust-bar-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+
+    .trust-item {}
+
+    /* CHANGE 4e: numbers 64px with orange underline bar */
+    .trust-num {
+      /* CHANGE 1: number color → #C56E23 */
+      font-family: var(--ff-display);
+      font-size: 64px;
+      font-weight: 700;
+      color: #C56E23;
+      line-height: 1;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* CHANGE 4e: thin orange bar under each number */
+    .trust-num-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .trust-num-wrap .trust-num-bar {
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--orange);
+      border-radius: 2px;
+      margin-top: 8px;
+    }
+
+    .trust-label {
+      font-size: 14px;
+      font-weight: 600;
+      /* CHANGE 1: label color → rgba(255,255,255,0.75) */
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.04em;
+    }
+
+    /* ===================================================
+       PRODUCTS SECTION — CHANGE 2: MENU STYLE
+    =================================================== */
+    .products {
+      padding: 96px 24px;
+      background: var(--cream);
+    }
+
+    /* Menu list container */
+    .menu-list {
+      max-width: 760px;
+      margin: 0 auto 48px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 16px;
+      border-bottom: 1px solid rgba(185,177,170,0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .menu-item:first-child { border-top: 1px solid rgba(185,177,170,0.2); }
+    .menu-item:hover { background: #FDF6EE; }
+
+    .menu-item-img {
+      width: 140px;
+      height: 140px;
+      min-width: 140px;
+      border-radius: 14px;
+      object-fit: cover;
+      background: var(--choc);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .menu-item-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+    /* Gradient placeholder for items without real photo */
+    .menu-item-img.grad-choc {
+      background: linear-gradient(135deg, #2B1204 0%, #5a2a0e 100%);
+    }
+    .menu-item-img.grad-orange {
+      background: linear-gradient(135deg, #C56E23 0%, #e8933a 100%);
+    }
+    .menu-item-img.grad-blue {
+      background: linear-gradient(135deg, #9CD8E9 0%, #6db8ce 100%);
+    }
+
+    /* Icon inside gradient placeholder */
+    .menu-item-img.grad-choc::after,
+    .menu-item-img.grad-orange::after,
+    .menu-item-img.grad-blue::after {
+      content: '🍪';
+      font-size: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .menu-item-content {
+      flex: 1;
+    }
+
+    .menu-item-name {
+      font-family: var(--ff-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--choc);
+      margin-bottom: 6px;
+    }
+
+    .menu-item-desc {
+      font-size: 15px;
+      color: var(--beige);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .menu-item-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.04em;
+    }
+
+    .menu-item-link {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--orange);
+      margin-top: 10px;
+      transition: gap 0.2s;
+    }
+    .menu-item-link:hover { text-decoration: underline; }
+
+    .menu-cta-wrap {
+      text-align: center;
+    }
+
+    /* ===================================================
+       HOW IT WORKS
+    =================================================== */
+    .how-it-works {
+      padding: 96px 24px;
+      background: var(--choc);
+    }
+
+    .how-it-works .section-label { color: rgba(197,110,35,0.85); }
+    .how-it-works .section-title { color: var(--white); }
+    .how-it-works .title-bar { background: var(--orange); }
+
+    .steps-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .step-card {
+      text-align: center;
+      padding: 32px 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+    .step-card:hover { background: rgba(255,255,255,0.09); }
+
+    .step-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    .step-num {
+      font-family: var(--ff-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .step-title {
+      font-family: var(--ff-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+
+    /* ===================================================
+       SPECIAL ORDERS
+    =================================================== */
+    .special {
+      padding: 96px 24px;
+      background: var(--cream);
+    }
+
+    .special-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .special-img {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--choc);
+    }
+    .special-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .special-content .section-label { justify-content: flex-start; }
+    .special-content .section-title { text-align: left; }
+    .special-content .section-title-wrap { text-align: left; margin-bottom: 24px; }
+    .special-content .title-bar { margin-left: 0; }
+
+    .special-content p {
+      font-size: 16px;
+      color: #6b5b52;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .special-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .special-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--choc);
+    }
+    .special-features li::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===================================================
+       TESTIMONIALS
+    =================================================== */
+    .testimonials {
+      padding: 96px 24px;
+      background: var(--choc);
+    }
+    .testimonials .section-label { color: rgba(197,110,35,0.85); }
+    .testimonials .section-title { color: var(--white); }
+    .testimonials .title-bar { background: var(--orange); }
+
+    .carousel-track-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.5s ease;
+    }
+
+    .testimonial-card {
+      flex: 0 0 calc(33.333% - 16px);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 28px 24px;
+    }
+
+    .stars {
+      color: var(--orange);
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+
+    .testimonial-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.05em;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .carousel-dots button {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dots button.active {
+      background: var(--orange);
+      transform: scale(1.3);
+    }
+
+    /* ===================================================
+       CTA FINAL
+    =================================================== */
+    .cta-final {
+      padding: 100px 24px;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .cta-final .section-title { margin-bottom: 16px; }
+
+    .cta-final p {
+      font-size: 18px;
+      color: #6b5b52;
+      line-height: 1.6;
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
+
+    .cta-final-btns {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ===================================================
+       FOOTER
+    =================================================== */
+    .footer {
+      background: var(--choc);
+      padding: 64px 24px 32px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-grid {
+      max-width: 960px;
+      margin: 0 auto 48px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    .footer-brand img {
+      height: 52px;
+      object-fit: contain;
+      margin-bottom: 16px;
+      /* CHANGE 4d: force white logo via CSS filter */
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-brand p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.6);
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-family: var(--ff-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--orange); }
+
+    .footer-bottom {
+      max-width: 960px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ===================================================
+       WHATSAPP FLOATING BUTTON
+    =================================================== */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 990;
+      width: 58px;
+      height: 58px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid #25d366;
+      opacity: 0.5;
+      animation: waPulse 2s infinite;
+    }
+    @keyframes waPulse {
+      0%   { transform: scale(1); opacity: 0.5; }
+      70%  { transform: scale(1.4); opacity: 0; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* ===================================================
+       CATALOG POPUP — CHANGE 3
+    =================================================== */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(43, 18, 4, 0.85);
+      z-index: 2000;
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .popup-overlay.open {
+      display: flex;
+    }
+
+    .popup-modal {
+      background: var(--cream);
+      max-width: 720px;
+      width: calc(100% - 32px);
+      max-height: 85vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      opacity: 0;
+      transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+      padding: 48px;
+      padding-bottom: 100px; /* space for sticky footer */
+    }
+    .popup-overlay.open .popup-modal {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--choc);
+      color: var(--white);
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+      line-height: 1;
+    }
+    .popup-close:hover { background: var(--orange); }
+
+    .popup-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .popup-header .popup-logo {
+      height: 56px;
+      object-fit: contain;
+      margin: 0 auto 16px;
+    }
+    .popup-header h2 {
+      font-family: var(--ff-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--choc);
+      margin-bottom: 8px;
+    }
+    .popup-header p {
+      font-size: 14px;
+      color: var(--beige);
+    }
+    .popup-divider {
+      border: none;
+      height: 1px;
+      background: rgba(197,110,35,0.30);
+      margin: 16px 0;
+    }
+
+    .popup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .popup-card {
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(43,18,4,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .popup-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(43,18,4,0.15);
+    }
+
+    .popup-card-img {
+      height: 160px;
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      background: var(--choc);
+    }
+    .popup-card-img.grad-choc {
+      background: linear-gradient(135deg, #2B1204 0%, #5a2a0e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+    }
+    .popup-card-img.grad-orange {
+      background: linear-gradient(135deg, #C56E23 0%, #e8933a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+    }
+    .popup-card-img.grad-blue {
+      background: linear-gradient(135deg, #9CD8E9 0%, #6db8ce 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+    }
+
+    .popup-card-body {
+      padding: 20px;
+    }
+    .popup-card-body .card-name {
+      font-family: var(--ff-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--choc);
+      margin-bottom: 6px;
+    }
+    .popup-card-body .card-desc {
+      font-size: 13px;
+      color: var(--beige);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .popup-card-body .card-badge {
+      display: inline-block;
+      background: var(--cream);
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .popup-card-body .card-price {
+      font-size: 13px;
+      color: var(--beige);
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+    .popup-card-body .card-btn {
+      display: block;
+      width: 100%;
+      background: var(--orange);
+      color: var(--white);
+      text-align: center;
+      font-family: var(--ff-body);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .popup-card-body .card-btn:hover { background: #a85a18; }
+
+    /* Sticky footer inside popup */
+    .popup-footer {
+      position: sticky;
+      bottom: 0;
+      left: 0; right: 0;
+      background: var(--white);
+      border-top: 1px solid rgba(185,177,170,0.20);
+      padding: 16px 24px;
+      text-align: center;
+      margin: 0 -48px -100px;
+    }
+    .popup-footer p {
+      font-size: 14px;
+      color: var(--choc);
+      margin-bottom: 4px;
+    }
+    .popup-footer a {
+      color: var(--orange);
+      font-weight: 700;
+    }
+    .popup-footer .popup-footer-note {
+      font-size: 12px;
+      color: var(--beige);
+      margin-bottom: 0;
+    }
+
+    /* ===================================================
+       RESPONSIVE
+    =================================================== */
+    @media (max-width: 900px) {
+      .trust-bar-inner { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .special-inner { grid-template-columns: 1fr; }
+      .special-img { aspect-ratio: 16/9; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .testimonial-card { flex: 0 0 calc(50% - 12px); }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .trust-bar-inner { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .menu-item { flex-direction: column; align-items: flex-start; }
+      .menu-item-img { width: 100%; height: 200px; min-width: unset; border-radius: 10px; }
+      .popup-grid { grid-template-columns: 1fr; }
+      .popup-modal { padding: 32px 24px; padding-bottom: 100px; }
+      .popup-footer { margin: 0 -24px -100px; }
+      .testimonial-card { flex: 0 0 calc(100% - 0px); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .trust-num { font-size: 48px; }
+      .steps-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+    <a href="#inicio" class="nav-logo" aria-label="Bustigalletas inicio">
+      <img src="Logo sin fondo.png" alt="Bustigalletas logo"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+      <span style="display:none;">Bustigalletas</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#galletas">Galletas</a></li>
+      <li><a href="#pedido">¿Cómo pedir?</a></li>
+      <li><a href="#especiales">Pedidos especiales</a></li>
+      <li><a href="#testimonios">Opiniones</a></li>
+      <li>
+        <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20quiero%20hacer%20un%20pedido%20%F0%9F%AA%9E"
+           target="_blank" rel="noopener noreferrer" class="nav-cta">Pedir ahora</a>
+      </li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Menú móvil">
+    <ul>
+      <li><a href="#galletas" class="mobile-link">Galletas</a></li>
+      <li><a href="#pedido" class="mobile-link">¿Cómo pedir?</a></li>
+      <li><a href="#especiales" class="mobile-link">Pedidos especiales</a></li>
+      <li><a href="#testimonios" class="mobile-link">Opiniones</a></li>
+      <li>
+        <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20quiero%20hacer%20un%20pedido%20%F0%9F%AA%9E"
+           target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-block;margin-top:8px;">Pedir ahora</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="inicio" aria-label="Sección principal">
+    <div class="hero-bg" role="img" aria-label="Galletas artesanales Bustigalletas"></div>
+    <div class="hero-overlay"></div>
+    <!-- CHANGE 4a: artisanal grain texture -->
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="hero-tag">HECHO CON AMOR · MÉRIDA, YUCATÁN</span>
+      <h1>Galletas que te <em>hacen</em><br>volver por más</h1>
+      <p class="hero-sub">
+        Artesanales, rellenas y hechas a mano.<br>
+        Entregas cada martes y jueves en Mérida.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openPopup()">Ver catálogo</button>
+        <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20quiero%20hacer%20un%20pedido%20%F0%9F%AA%9E"
+           target="_blank" rel="noopener noreferrer" class="btn-outline">Hablar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST BAR — CHANGE 1 & 4e ===== -->
+  <section class="trust-bar" aria-label="Estadísticas de confianza">
+    <div class="trust-bar-inner">
+      <div class="trust-item reveal">
+        <div class="trust-num-wrap">
+          <span class="trust-num" data-target="500">0</span>
+          <span class="trust-num-bar" aria-hidden="true"></span>
+        </div>
+        <p class="trust-label">Pedidos entregados</p>
+      </div>
+      <div class="trust-item reveal" style="transition-delay:0.1s">
+        <div class="trust-num-wrap">
+          <span class="trust-num" data-target="6">0</span>
+          <span class="trust-num-bar" aria-hidden="true"></span>
+        </div>
+        <p class="trust-label">Sabores únicos</p>
+      </div>
+      <div class="trust-item reveal" style="transition-delay:0.2s">
+        <div class="trust-num-wrap">
+          <span class="trust-num" data-target="100">0</span>
+          <span class="trust-num-bar" aria-hidden="true"></span>
+        </div>
+        <p class="trust-label">Hecho a mano</p>
+      </div>
+      <div class="trust-item reveal" style="transition-delay:0.3s">
+        <div class="trust-num-wrap">
+          <span class="trust-num" data-target="2">0</span>
+          <span class="trust-num-bar" aria-hidden="true"></span>
+        </div>
+        <p class="trust-label">Entregas por semana</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTS — CHANGE 2: MENU STYLE ===== -->
+  <section class="products" id="galletas" aria-label="Nuestras galletas">
+    <div class="section-title-wrap reveal">
+      <p class="section-label">NUESTRO MENÚ ARTESANAL</p>
+      <h2 class="section-title">Nuestras galletas</h2>
+      <span class="title-bar" aria-hidden="true"></span>
+    </div>
+
+    <div class="menu-list" role="list">
+
+      <!-- Item 1: Brownie relleno de Nutella -->
+      <article class="menu-item reveal" role="listitem" onclick="openPopup()">
+        <div class="menu-item-img">
+          <img src="Brownie_rellena.jpg" alt="Brownie relleno de Nutella"
+               onerror="this.parentElement.classList.add('grad-choc'); this.remove();" />
+        </div>
+        <div class="menu-item-content">
+          <p class="menu-item-name">Brownie relleno de Nutella</p>
+          <p class="menu-item-desc">Intensa y equilibrada. Exterior crujiente, interior de brownie con Nutella derretida.</p>
+          <p class="menu-item-badge">Pedido mínimo: 3 galletas</p>
+          <span class="menu-item-link" aria-label="Pedir Brownie relleno de Nutella">Pedir →</span>
+        </div>
+      </article>
+
+      <!-- Item 2: Chispas con Nutella -->
+      <article class="menu-item reveal" style="transition-delay:0.05s" role="listitem" onclick="openPopup()">
+        <div class="menu-item-img">
+          <img src="Chispas_chocolate_partida.jpg" alt="Chispas con Nutella"
+               onerror="this.parentElement.classList.add('grad-choc'); this.remove();" />
+        </div>
+        <div class="menu-item-content">
+          <p class="menu-item-name">Chispas con Nutella</p>
+          <p class="menu-item-desc">La clásica llevada al siguiente nivel. Rellena de Nutella y cargada de chispas de chocolate.</p>
+          <p class="menu-item-badge">Pedido mínimo: 3 galletas</p>
+          <span class="menu-item-link" aria-label="Pedir Chispas con Nutella">Pedir →</span>
+        </div>
+      </article>
+
+      <!-- Item 3: Red Velvet con malvavisco -->
+      <article class="menu-item reveal" style="transition-delay:0.1s" role="listitem" onclick="openPopup()">
+        <div class="menu-item-img">
+          <img src="Red_Velvet_relleno_queso_crema_2.jpg" alt="Red Velvet con malvavisco"
+               onerror="this.parentElement.classList.add('grad-choc'); this.remove();" />
+        </div>
+        <div class="menu-item-content">
+          <p class="menu-item-name">Red Velvet con malvavisco</p>
+          <p class="menu-item-desc">Original y con mucho estilo. Roja por fuera, suave por dentro con toque de malvavisco.</p>
+          <p class="menu-item-badge">Pedido mínimo: 3 galletas</p>
+          <span class="menu-item-link" aria-label="Pedir Red Velvet con malvavisco">Pedir →</span>
+        </div>
+      </article>
+
+      <!-- Item 4: Oreo V -->
+      <article class="menu-item reveal" style="transition-delay:0.15s" role="listitem" onclick="openPopup()">
+        <div class="menu-item-img grad-choc" aria-label="Oreo V" role="img">🍪</div>
+        <div class="menu-item-content">
+          <p class="menu-item-name">Oreo V</p>
+          <p class="menu-item-desc">El favorito de los fans de Oreo con el toque especial de Bustigalletas.</p>
+          <p class="menu-item-badge">Pedido mínimo: 3 galletas</p>
+          <span class="menu-item-link" aria-label="Pedir Oreo V">Pedir →</span>
+        </div>
+      </article>
+
+      <!-- Item 5: Lotus con chocolate blanco -->
+      <article class="menu-item reveal" style="transition-delay:0.2s" role="listitem" onclick="openPopup()">
+        <div class="menu-item-img grad-orange" aria-label="Lotus con chocolate blanco" role="img">🍪</div>
+        <div class="menu-item-content">
+          <p class="menu-item-name">Lotus con chocolate blanco</p>
+          <p class="menu-item-desc">La combinación más adictiva: galleta Lotus con chocolate blanco derretido en cada bocado.</p>
+          <p class="menu-item-badge">Pedido mínimo: 3 galletas</p>
+          <span class="menu-item-link" aria-label="Pedir Lotus con chocolate blanco">Pedir →</span>
+        </div>
+      </article>
+
+      <!-- Item 6: Rosquita de fresa -->
+      <article class="menu-item reveal" style="transition-delay:0.25s" role="listitem" onclick="openPopup()">
+        <div class="menu-item-img grad-blue" aria-label="Rosquita de fresa" role="img">🍪</div>
+        <div class="menu-item-content">
+          <p class="menu-item-name">Rosquita de fresa</p>
+          <p class="menu-item-desc">Fresca, ligera y diferente. La opción perfecta para salir de lo habitual.</p>
+          <p class="menu-item-badge">Pedido mínimo: 3 galletas</p>
+          <span class="menu-item-link" aria-label="Pedir Rosquita de fresa">Pedir →</span>
+        </div>
+      </article>
+
+    </div><!-- /.menu-list -->
+
+    <!-- CTA below menu -->
+    <div class="menu-cta-wrap reveal">
+      <button class="btn-primary" onclick="openPopup()" style="font-size:15px; padding:15px 36px;">
+        Ver catálogo completo y pedir
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="how-it-works" id="pedido" aria-label="Cómo hago mi pedido">
+    <div class="section-title-wrap reveal">
+      <p class="section-label">SIN COMPLICACIONES</p>
+      <h2 class="section-title" style="color:var(--white);">¿Cómo hago mi pedido?</h2>
+      <span class="title-bar" aria-hidden="true"></span>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-icon" aria-hidden="true">📋</div>
+        <p class="step-num">Paso 01</p>
+        <h3 class="step-title">Elige tus sabores</h3>
+        <p class="step-desc">Mínimo 3 galletas por pedido. Puedes mezclar sabores.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.1s">
+        <div class="step-icon" aria-hidden="true">💬</div>
+        <p class="step-num">Paso 02</p>
+        <h3 class="step-title">Escríbenos</h3>
+        <p class="step-desc">Contáctanos por WhatsApp con tu pedido y datos de entrega.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.2s">
+        <div class="step-icon" aria-hidden="true">💳</div>
+        <p class="step-num">Paso 03</p>
+        <h3 class="step-title">Paga y confirma</h3>
+        <p class="step-desc">Aceptamos transferencia. Te enviamos confirmación de tu pedido.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.3s">
+        <div class="step-icon" aria-hidden="true">🚗</div>
+        <p class="step-num">Paso 04</p>
+        <h3 class="step-title">Recibe tu pedido</h3>
+        <p class="step-desc">Entregamos martes y jueves en Mérida, Yucatán.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SPECIAL ORDERS ===== -->
+  <section class="special" id="especiales" aria-label="Pedidos especiales">
+    <div class="special-inner">
+      <div class="special-img reveal">
+        <img src="Evento_especial.jpg" alt="Caja de galletas para evento especial"
+             onerror="this.style.background='linear-gradient(135deg,#2B1204,#5a2a0e)'; this.remove();" />
+      </div>
+      <div class="special-content reveal" style="transition-delay:0.15s">
+        <div class="section-title-wrap">
+          <p class="section-label">REGALOS Y EVENTOS</p>
+          <h2 class="section-title">¿Evento especial?</h2>
+          <span class="title-bar" aria-hidden="true"></span>
+        </div>
+        <p>Cajas personalizadas para bodas, xv años, baby showers, cumpleaños y más. Diseñamos la experiencia perfecta para tu ocasión.</p>
+        <ul class="special-features">
+          <li>Empaques con diseño personalizado</li>
+          <li>Pedidos desde 12 galletas</li>
+          <li>Tarjeta de dedicatoria incluida</li>
+          <li>Entrega a domicilio en Mérida</li>
+        </ul>
+        <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20me%20interesa%20un%20pedido%20especial%20%F0%9F%AA%9E"
+           target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Cotizar evento especial
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials" id="testimonios" aria-label="Testimonios de clientes">
+    <div class="section-title-wrap reveal">
+      <p class="section-label">LO QUE DICEN NUESTROS CLIENTES</p>
+      <h2 class="section-title" style="color:var(--white);">Opiniones reales</h2>
+      <span class="title-bar" aria-hidden="true"></span>
+    </div>
+    <div class="carousel-track-wrap" aria-label="Carrusel de testimonios">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="testimonial-card">
+          <p class="stars" aria-label="5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"Las más ricas que he probado en Mérida. El brownie relleno de Nutella es una locura. Ya hice mi segundo pedido."</p>
+          <p class="testimonial-author">— Ana L., Mérida</p>
+        </div>
+        <div class="testimonial-card">
+          <p class="stars" aria-label="5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"Pedí para el cumpleaños de mi hija y quedaron perfectas. La presentación era preciosa y sabían increíble."</p>
+          <p class="testimonial-author">— Sofía R., Mérida</p>
+        </div>
+        <div class="testimonial-card">
+          <p class="stars" aria-label="5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"El Red Velvet con malvavisco es mi favorito. Muy buena atención, responden rápido por WhatsApp."</p>
+          <p class="testimonial-author">— Carlos M., Mérida</p>
+        </div>
+        <div class="testimonial-card">
+          <p class="stars" aria-label="5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"Pedí para mi boda y todos mis invitados me preguntaron de dónde eran. Definitivamente las recomiendo."</p>
+          <p class="testimonial-author">— Patricia V., Mérida</p>
+        </div>
+        <div class="testimonial-card">
+          <p class="stars" aria-label="5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"Las Lotus con chocolate blanco son adictivas. Ya no puedo parar de pedirlas cada semana."</p>
+          <p class="testimonial-author">— Miguel A., Mérida</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Indicadores del carrusel"></div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="cta-final" aria-label="Llamada a la acción">
+    <div class="section-title-wrap reveal">
+      <h2 class="section-title">¿Lista para el primer bocado?</h2>
+      <span class="title-bar" aria-hidden="true"></span>
+    </div>
+    <p class="reveal" style="transition-delay:0.1s">Pedido mínimo de 3 galletas. Entregas martes y jueves en Mérida, Yucatán.</p>
+    <div class="cta-final-btns reveal" style="transition-delay:0.2s">
+      <button class="btn-primary" onclick="openPopup()">Ver catálogo</button>
+      <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20quiero%20hacer%20un%20pedido%20%F0%9F%AA%9E"
+         target="_blank" rel="noopener noreferrer" class="btn-outline" style="color:var(--choc); border-color:rgba(43,18,4,0.35);">
+        Escribir por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" aria-label="Pie de página">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <!-- CHANGE 4d: filter brightness(0) invert(1) forces logo white -->
+        <img src="Logo sin fondo.png" alt="Bustigalletas"
+             onerror="this.style.display='none';" />
+        <p>Galletas artesanales hechas a mano en Mérida, Yucatán. Con amor y los mejores ingredientes.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Menú</h4>
+        <ul>
+          <li><a href="#galletas">Nuestras galletas</a></li>
+          <li><a href="#pedido">¿Cómo pedir?</a></li>
+          <li><a href="#especiales">Pedidos especiales</a></li>
+          <li><a href="#testimonios">Opiniones</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li>
+            <a href="https://wa.me/529991369402" target="_blank" rel="noopener noreferrer">
+              WhatsApp: +52 999 136 9402
+            </a>
+          </li>
+          <li><a href="#inicio">Mérida, Yucatán, México</a></li>
+          <li><a href="#pedido">Entregas: Martes y Jueves</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Bustigalletas. Todos los derechos reservados.</p>
+      <p>Hecho con 🍪 en Mérida, Yucatán</p>
+    </div>
+  </footer>
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20quiero%20hacer%20un%20pedido%20%F0%9F%AA%9E"
+     target="_blank" rel="noopener noreferrer"
+     class="wa-float" aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.528 5.849L.057 23.571l5.88-1.544A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.796 9.796 0 01-5.032-1.39l-.36-.214-3.734.98.998-3.647-.235-.374A9.794 9.794 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/>
+    </svg>
+  </a>
+
+  <!-- ===== CATALOG POPUP — CHANGE 3 ===== -->
+  <div class="popup-overlay" id="popupOverlay" role="dialog" aria-modal="true" aria-label="Catálogo de galletas">
+    <div class="popup-modal" id="popupModal">
+
+      <button class="popup-close" id="popupClose" aria-label="Cerrar catálogo">×</button>
+
+      <!-- Header -->
+      <div class="popup-header">
+        <img src="Logo sin fondo.png" alt="Bustigalletas" class="popup-logo"
+             onerror="this.style.display='none';" />
+        <h2>Nuestro catálogo</h2>
+        <p>Pedido mínimo 3 galletas · Entregas martes y jueves en Mérida</p>
+      </div>
+      <hr class="popup-divider" />
+
+      <!-- Product cards grid -->
+      <div class="popup-grid">
+
+        <!-- Card 1 -->
+        <div class="popup-card">
+          <img src="Brownie_rellena.jpg" alt="Brownie relleno de Nutella" class="popup-card-img"
+               onerror="this.outerHTML='<div class=\'popup-card-img grad-choc\'>🍫</div>';" />
+          <div class="popup-card-body">
+            <p class="card-name">Brownie relleno de Nutella</p>
+            <p class="card-desc">Exterior crujiente, interior de brownie con Nutella derretida.</p>
+            <span class="card-badge">Mínimo: 3 galletas</span>
+            <p class="card-price">Consultar precio</p>
+            <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20me%20interesa%20pedir%20este%20sabor%20%F0%9F%AA%9E"
+               target="_blank" rel="noopener noreferrer" class="card-btn">Pedir este sabor</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="popup-card">
+          <img src="Chispas_chocolate_partida.jpg" alt="Chispas con Nutella" class="popup-card-img"
+               onerror="this.outerHTML='<div class=\'popup-card-img grad-choc\'>🍪</div>';" />
+          <div class="popup-card-body">
+            <p class="card-name">Chispas con Nutella</p>
+            <p class="card-desc">La clásica llevada al siguiente nivel. Rellena de Nutella y cargada de chispas.</p>
+            <span class="card-badge">Mínimo: 3 galletas</span>
+            <p class="card-price">Consultar precio</p>
+            <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20me%20interesa%20pedir%20este%20sabor%20%F0%9F%AA%9E"
+               target="_blank" rel="noopener noreferrer" class="card-btn">Pedir este sabor</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="popup-card">
+          <img src="Red_Velvet_relleno_queso_crema_2.jpg" alt="Red Velvet con malvavisco" class="popup-card-img"
+               onerror="this.outerHTML='<div class=\'popup-card-img grad-choc\'>🔴</div>';" />
+          <div class="popup-card-body">
+            <p class="card-name">Red Velvet con malvavisco</p>
+            <p class="card-desc">Roja por fuera, suave por dentro con toque de malvavisco.</p>
+            <span class="card-badge">Mínimo: 3 galletas</span>
+            <p class="card-price">Consultar precio</p>
+            <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20me%20interesa%20pedir%20este%20sabor%20%F0%9F%AA%9E"
+               target="_blank" rel="noopener noreferrer" class="card-btn">Pedir este sabor</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="popup-card">
+          <div class="popup-card-img grad-choc">🍪</div>
+          <div class="popup-card-body">
+            <p class="card-name">Oreo V</p>
+            <p class="card-desc">El favorito de los fans de Oreo con el toque especial de Bustigalletas.</p>
+            <span class="card-badge">Mínimo: 3 galletas</span>
+            <p class="card-price">Consultar precio</p>
+            <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20me%20interesa%20pedir%20este%20sabor%20%F0%9F%AA%9E"
+               target="_blank" rel="noopener noreferrer" class="card-btn">Pedir este sabor</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="popup-card">
+          <div class="popup-card-img grad-orange">🍪</div>
+          <div class="popup-card-body">
+            <p class="card-name">Lotus con chocolate blanco</p>
+            <p class="card-desc">Galleta Lotus con chocolate blanco derretido en cada bocado.</p>
+            <span class="card-badge">Mínimo: 3 galletas</span>
+            <p class="card-price">Consultar precio</p>
+            <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20me%20interesa%20pedir%20este%20sabor%20%F0%9F%AA%9E"
+               target="_blank" rel="noopener noreferrer" class="card-btn">Pedir este sabor</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="popup-card">
+          <div class="popup-card-img grad-blue">🍓</div>
+          <div class="popup-card-body">
+            <p class="card-name">Rosquita de fresa</p>
+            <p class="card-desc">Fresca, ligera y diferente. La opción perfecta para salir de lo habitual.</p>
+            <span class="card-badge">Mínimo: 3 galletas</span>
+            <p class="card-price">Consultar precio</p>
+            <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20me%20interesa%20pedir%20este%20sabor%20%F0%9F%AA%9E"
+               target="_blank" rel="noopener noreferrer" class="card-btn">Pedir este sabor</a>
+          </div>
+        </div>
+
+      </div><!-- /.popup-grid -->
+
+      <!-- Sticky footer -->
+      <div class="popup-footer">
+        <p>¿Quieres mezclar sabores?
+          <a href="https://wa.me/529991369402?text=Hola%20Bustigalletas%2C%20quiero%20armar%20una%20caja%20mezclando%20sabores%20%F0%9F%AA%9E"
+             target="_blank" rel="noopener noreferrer">
+            Escríbenos y armamos tu caja
+          </a>
+        </p>
+        <p class="popup-footer-note">Respondemos en menos de 24 hrs 🍪</p>
+      </div>
+
+    </div><!-- /.popup-modal -->
+  </div><!-- /.popup-overlay -->
+
+  <!-- ===================================================
+       JAVASCRIPT
+  =================================================== -->
+  <script>
+    /* ---- NAVBAR SCROLL ---- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ---- HAMBURGER ---- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    /* ---- REVEAL ON SCROLL ---- */
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    }
+
+    /* ---- COUNT-UP ANIMATION ---- */
+    function countUp(el) {
+      const target = +el.dataset.target;
+      const suffix = el.dataset.suffix || (target === 100 ? '%' : (target <= 10 ? '' : '+'));
+      const duration = 1800;
+      const start = performance.now();
+      const update = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target) + (progress === 1 ? suffix : '');
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const countObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            countUp(entry.target);
+            countObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('.trust-num').forEach(el => countObserver.observe(el));
+    }
+
+    /* ---- TESTIMONIALS CAROUSEL ---- */
+    const track = document.getElementById('carouselTrack');
+    const dotsContainer = document.getElementById('carouselDots');
+    const cards = track ? track.querySelectorAll('.testimonial-card') : [];
+    let currentSlide = 0;
+    let autoSlideTimer;
+
+    function getSlidesPerView() {
+      return window.innerWidth < 680 ? 1 : window.innerWidth < 900 ? 2 : 3;
+    }
+
+    function getTotalSlides() {
+      const spv = getSlidesPerView();
+      return Math.ceil(cards.length / spv);
+    }
+
+    function buildDots() {
+      dotsContainer.innerHTML = '';
+      const total = getTotalSlides();
+      for (let i = 0; i < total; i++) {
+        const btn = document.createElement('button');
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-label', `Slide ${i + 1}`);
+        if (i === currentSlide) { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); }
+        else btn.setAttribute('aria-selected', 'false');
+        btn.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(btn);
+      }
+    }
+
+    function goTo(index) {
+      const total = getTotalSlides();
+      currentSlide = (index + total) % total;
+      const spv = getSlidesPerView();
+      const cardWidth = cards[0] ? cards[0].offsetWidth : 0;
+      const gap = 24;
+      track.style.transform = `translateX(-${currentSlide * spv * (cardWidth + gap)}px)`;
+      dotsContainer.querySelectorAll('button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === currentSlide);
+        btn.setAttribute('aria-selected', i === currentSlide);
+      });
+    }
+
+    function startAutoSlide() {
+      clearInterval(autoSlideTimer);
+      autoSlideTimer = setInterval(() => goTo(currentSlide + 1), 4000);
+    }
+
+    if (track && cards.length) {
+      buildDots();
+      startAutoSlide();
+      window.addEventListener('resize', () => { buildDots(); goTo(0); });
+      track.addEventListener('mouseenter', () => clearInterval(autoSlideTimer));
+      track.addEventListener('mouseleave', startAutoSlide);
+    }
+
+    /* ---- CATALOG POPUP — CHANGE 3 ---- */
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupClose  = document.getElementById('popupClose');
+
+    function openPopup() {
+      popupOverlay.style.display = 'flex';
+      // Force reflow for animation
+      popupOverlay.offsetHeight;
+      popupOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePopup() {
+      popupOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+      // Hide after transition
+      setTimeout(() => {
+        if (!popupOverlay.classList.contains('open')) {
+          popupOverlay.style.display = 'none';
+        }
+      }, 280);
+    }
+
+    popupClose.addEventListener('click', closePopup);
+
+    // Close on overlay click (outside modal)
+    popupOverlay.addEventListener('click', (e) => {
+      if (e.target === popupOverlay) closePopup();
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popupOverlay.classList.contains('open')) closePopup();
+    });
+  </script>
+
+</body>
+</html>
